@@ -12,8 +12,6 @@
 // how do we check if an element has nested elements?
 //
 var getElementsByClassName = function(className) {
-  console.log(className);
-  console.log(document.body);
   // create result array
   var result = [];
   // find a way to check if element contains className
@@ -22,17 +20,22 @@ var getElementsByClassName = function(className) {
     result.push(document.body);
   }
   // check if current element has nested elements
-  // if there are nested elements, iterate through recursively
+  // create helper function
+  // if there are nested elements, then
+  // check if nested elements contain class name and push to result array if true
+  // use helper function to check if
+  // nested elements have nested elements and repeat until no more nested elements
   var checkNested = function(nestedElement) {
+
     if (nestedElement.childNodes.length > 0) {
       var children = nestedElement.childNodes;
+
       children.forEach(function(elements) {
-        if (elements.className === className) {
-          // problem
-          // if an element has more than 1 class name, this if statement will turn up false and the div with 2 class names will not get pushed
-          // element.classList gives us all the classes but we cant say element.classList.contain(classname) or use .includes
-          // how do we say if the classList contains our className do "something"
-          result.push(elements);
+        if (elements.classList !== undefined) {
+
+          if (elements.classList.contains(className)) {
+            result.push(elements);
+          }
         }
         checkNested(elements);
       });
@@ -41,7 +44,6 @@ var getElementsByClassName = function(className) {
   checkNested(document.body);
   // break point would be once there are no more nested elements
   // return result array
-  console.log(result);
   return result;
 };
 
